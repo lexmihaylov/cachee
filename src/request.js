@@ -38,12 +38,6 @@ cachee.request = function(opt) {
             
             xhr.removeEventListener('load', onLoad);
         });
-        
-        xhr.addEventListener("error", function onError() {
-            reject(new Error('can`t execute request'));
-            
-            xhr.removeEventListener('error', onError);
-        });
     });
     
     opt.method = opt.method || 'GET';
@@ -63,8 +57,6 @@ cachee.request = function(opt) {
         var bindListeners = function(type, handle) {
             xhr.addEventListener(type, function() {
                 handle.apply(null, arguments);
-                
-                xhr.removeEventListener(type, handle);
             });
         };
         

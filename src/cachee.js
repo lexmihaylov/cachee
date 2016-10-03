@@ -18,6 +18,10 @@ var cachee = {
      * @returns {Promise}
      * 
      * @example
+     * // <tag-name cachee="<attr>:<resource-url>></tag-name>"
+     * <img cachee="src:<image>" />
+     * 
+     * <script>
      * cachee.cache([
      *  cachee.resource('/my-resource1'),
      *  cachee.resource('/my-resource2'),
@@ -26,7 +30,7 @@ var cachee = {
      *  //resources loaded
      *  cachee.load(); or cache.load(myElem);
      * });
-     * 
+     * </script>
      * 
      */
     cache: function(cacheRequests) {

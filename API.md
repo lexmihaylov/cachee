@@ -26,6 +26,10 @@ cache resource requests
 
 **Example**  
 ```js
+// <tag-name cachee="<attr>:<resource-url>></tag-name>"
+<img cachee="src:<image>" />
+
+<script>
 cachee.cache([
  cachee.resource('/my-resource1'),
  cachee.resource('/my-resource2'),
@@ -34,6 +38,7 @@ cachee.cache([
  //resources loaded
  cachee.load(); or cache.load(myElem);
 });
+</script>
 ```
 <a name="cachee.load"></a>
 

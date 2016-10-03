@@ -27,6 +27,10 @@ var cachee = {
      * @returns {Promise}
      * 
      * @example
+     * // <tag-name cachee="<attr>:<resource-url>></tag-name>"
+     * <img cachee="src:<image>" />
+     * 
+     * <script>
      * cachee.cache([
      *  cachee.resource('/my-resource1'),
      *  cachee.resource('/my-resource2'),
@@ -35,7 +39,7 @@ var cachee = {
      *  //resources loaded
      *  cachee.load(); or cache.load(myElem);
      * });
-     * 
+     * </script>
      * 
      */
     cache: function(cacheRequests) {
@@ -101,12 +105,6 @@ cachee.request = function(opt) {
             
             xhr.removeEventListener('load', onLoad);
         });
-        
-        xhr.addEventListener("error", function onError() {
-            reject(new Error('can`t execute request'));
-            
-            xhr.removeEventListener('error', onError);
-        });
     });
     
     opt.method = opt.method || 'GET';
@@ -126,8 +124,6 @@ cachee.request = function(opt) {
         var bindListeners = function(type, handle) {
             xhr.addEventListener(type, function() {
                 handle.apply(null, arguments);
-                
-                xhr.removeEventListener(type, handle);
             });
         };
         

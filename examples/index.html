@@ -5,12 +5,14 @@
         <title>cacheejs test</title>
         <script type="text/javascript" src="../cachee.js"></script>
         <script>
-            cachee.init([
-                cachee.resource('http://www.tuxboard.com/photos/2014/10/bra-cam-nestle-fitness-cancer-sein.jpg')
-            ]);
+            cachee.cache([
+                cachee.resource('https://newevolutiondesigns.com/images/freebies/cat-wallpaper-22.jpg')
+            ]).then(function() {
+                cachee.load();
+            });
         </script>
     </head>
     <body>
-        <img cachee="src:http://www.tuxboard.com/photos/2014/10/bra-cam-nestle-fitness-cancer-sein.jpg" />
+        <img cachee="src:https://newevolutiondesigns.com/images/freebies/cat-wallpaper-22.jpg" />
     </body>
 </html>
