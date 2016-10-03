@@ -1,0 +1,23 @@
+{
+  "name": "cachee",
+  "description": "Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems",
+  "main": "cachee.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lexmihaylov/cachee.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lexmihaylov/cachee/issues"
+  },
+  "homepage": "https://github.com/lexmihaylov/cachee#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-umd": "^0.2.0",
+    "jsdoc-to-markdown": "^1.3.7"
+  }
+}
