@@ -1,4 +1,7 @@
 # cachee
+
+![alt travis ci](https://travis-ci.org/lexmihaylov/cachee.svg?branch=master)
+
 Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems
 # Usage
 ```html
