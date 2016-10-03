@@ -1,3 +1,6 @@
+var RegExpEscape = function(str) {
+    return (str+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
+};
 /**
  * Dom helper method
  * @memberof cachee
@@ -24,22 +27,28 @@ cachee._parseDom = function(rootElem) {
         var element = cachee.$$(rootElem, '[cachee]');
         element.forEach(function(item) {
             var resource = item.getAttribute('cachee');
+            var template = item.getAttribute('cachee-tpl');
             var attribute = resource.substring(0, resource.indexOf(':'));
+            var attributePath = attribute.split('.')
             var url = resource.substring(resource.indexOf(':') + 1);
             
             this.resource(url).then(function(url) {
-                item[attribute] = url;
+                var itemAttr = item;
+                
+                for(var i = 0; i < attributePath.length - 1; i++) {
+                    itemAttr = itemAttr[attributePath[i]];
+                }
+                
+                if(template) {
+                    url = template.replace(new RegExp("\\$\\{"+RegExpEscape(attribute)+"\\}", 'g'), url);    
+                }
+                
+                itemAttr[attributePath[attributePath.length - 1]] = url;
                 item.removeAttribute('cachee');
             });
            
         }.bind(this));
     }.bind(this);
     
-    if (document.readyState == "complete" || document.readyState == "loaded") {
-        manageCacheeElements();
-    } else {
-        document.addEventListener('DOMContentLoaded', function() {
-            manageCacheeElements();
-        }, false);
-    }
+    manageCacheeElements();
 };

@@ -103,7 +103,7 @@ cachee.request = function(opt) {
             if (xhr.status === 200) {  
                 resolve(xhr);
             } else {
-                reject(new Error(xhr.status + " ("+xhr.statusText+")"));
+                reject(new Error('Failed to load: ' + xhr.status + " ("+xhr.statusText+")"));
             }
             
             xhr.removeEventListener('load', onLoad);
@@ -136,7 +136,7 @@ cachee.request = function(opt) {
     }
     
     
-    xhr.open(opt.method.toUpperCase(), opt.url);
+    xhr.open(opt.method.toUpperCase(), opt.url, 'async' in opt? opt.async: true);
     xhr.send(opt.data || null);
     
     return promise;
@@ -173,8 +173,7 @@ cachee.resource = function(url, opt) {
         cacheTable[opt.url] = window.URL.createObjectURL(xhr.response);
         deferred.resolve(cacheTable[opt.url]);
     }).catch(function(err) {
-        console.warn(err);
-        deferred.resolve(null);
+        deferred.reject(err);
     });
     
     return promise;
@@ -218,6 +217,9 @@ cachee.readResource = function(url, type) {
     
     return promise;
 };
+var RegExpEscape = function(str) {
+    return (str+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
+};
 /**
  * Dom helper method
  * @memberof cachee
@@ -244,24 +246,30 @@ cachee._parseDom = function(rootElem) {
         var element = cachee.$$(rootElem, '[cachee]');
         element.forEach(function(item) {
             var resource = item.getAttribute('cachee');
+            var template = item.getAttribute('cachee-tpl');
             var attribute = resource.substring(0, resource.indexOf(':'));
+            var attributePath = attribute.split('.')
             var url = resource.substring(resource.indexOf(':') + 1);
             
             this.resource(url).then(function(url) {
-                item[attribute] = url;
+                var itemAttr = item;
+                
+                for(var i = 0; i < attributePath.length - 1; i++) {
+                    itemAttr = itemAttr[attributePath[i]];
+                }
+                
+                if(template) {
+                    url = template.replace(new RegExp("\\$\\{"+RegExpEscape(attribute)+"\\}", 'g'), url);    
+                }
+                
+                itemAttr[attributePath[attributePath.length - 1]] = url;
                 item.removeAttribute('cachee');
             });
            
         }.bind(this));
     }.bind(this);
     
-    if (document.readyState == "complete" || document.readyState == "loaded") {
-        manageCacheeElements();
-    } else {
-        document.addEventListener('DOMContentLoaded', function() {
-            manageCacheeElements();
-        }, false);
-    }
+    manageCacheeElements();
 };
 return cachee;
 }));

@@ -30,8 +30,7 @@ cachee.resource = function(url, opt) {
         cacheTable[opt.url] = window.URL.createObjectURL(xhr.response);
         deferred.resolve(cacheTable[opt.url]);
     }).catch(function(err) {
-        console.warn(err);
-        deferred.resolve(null);
+        deferred.reject(err);
     });
     
     return promise;

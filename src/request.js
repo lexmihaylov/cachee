@@ -33,7 +33,7 @@ cachee.request = function(opt) {
             if (xhr.status === 200) {  
                 resolve(xhr);
             } else {
-                reject(new Error(xhr.status + " ("+xhr.statusText+")"));
+                reject(new Error('Failed to load: ' + xhr.status + " ("+xhr.statusText+")"));
             }
             
             xhr.removeEventListener('load', onLoad);
@@ -66,7 +66,7 @@ cachee.request = function(opt) {
     }
     
     
-    xhr.open(opt.method.toUpperCase(), opt.url);
+    xhr.open(opt.method.toUpperCase(), opt.url, 'async' in opt? opt.async: true);
     xhr.send(opt.data || null);
     
     return promise;
