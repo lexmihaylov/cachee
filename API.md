@@ -40,6 +40,22 @@ cache resource requests
  ]).then(function() {
      //resources loaded
      cachee.load(); or cache.load(myElem);
+     // => <img src="blob:http://...1" />
+     // => <img src="blob:http://...2" />
+     // => <img src="blob:http://...3" />
+ });
+</script>
+
+<!-- Using deep attribute set and template attribute -->
+<!-- Format -->
+<!-- <tag-name cachee-tpl="my url resource ${<attr>}" cachee="<attr>:<resource-url"></tag-name> -->
+<div cachee="style.backgroundImage:/my-resource1" cachee-tpl="url(${style.backgroundImage})"></div>
+
+<script>
+ cachee.cache([
+     cachee.resource('/my-resource')
+ ]).then(function() { 
+     cachee.load(); // => <div style="background-image: url('blob:http://...')" cachee-tpl="url(${style.backgroundImage})"></div>
  });
 </script>
 ```
