@@ -1,0 +1,26 @@
+# cachee
+Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems
+# Usage
+```html
+<!-- Format: -->
+<!-- <tag-name cachee="<attr>:<resource-url>"></tag-name> -->
+<img cachee="src:/my-resource1" />
+<img cachee="src:/my-resource2" />
+<img cachee="src:/my-resource3" />
+ 
+<script>
+  cachee.cache([
+      cachee.resource('/my-resource1'),
+      cachee.resource('/my-resource2'),
+      cachee.resource('/my-resource3')
+  ]).then(function() {
+      //resources loaded
+      cachee.load(); or cache.load(myElem);
+  });
+</script>
+```
+# Documentation
+{{API-DOCS}}
+
+# Contribution
+Pull requests, Bug reports and feature requests

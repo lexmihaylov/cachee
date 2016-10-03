@@ -27,18 +27,21 @@ var cachee = {
      * @returns {Promise}
      * 
      * @example
-     * // <tag-name cachee="<attr>:<resource-url>></tag-name>"
-     * <img cachee="src:<image>" />
+     * <!-- Format: -->
+     * <!-- <tag-name cachee="<attr>:<resource-url>"></tag-name> -->
+     * <img cachee="src:/my-resource1" />
+     * <img cachee="src:/my-resource2" />
+     * <img cachee="src:/my-resource3" />
      * 
      * <script>
-     * cachee.cache([
-     *  cachee.resource('/my-resource1'),
-     *  cachee.resource('/my-resource2'),
-     *  cachee.resource('/my-resource3')
-     * ]).then(function() {
-     *  //resources loaded
-     *  cachee.load(); or cache.load(myElem);
-     * });
+     *  cachee.cache([
+     *      cachee.resource('/my-resource1'),
+     *      cachee.resource('/my-resource2'),
+     *      cachee.resource('/my-resource3')
+     *  ]).then(function() {
+     *      //resources loaded
+     *      cachee.load(); or cache.load(myElem);
+     *  });
      * </script>
      * 
      */
