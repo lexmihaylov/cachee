@@ -3,6 +3,7 @@
 ![alt travis ci](https://travis-ci.org/lexmihaylov/cachee.svg?branch=master)
 [![Code Climate](https://codeclimate.com/github/lexmihaylov/cachee/badges/gpa.svg)](https://codeclimate.com/github/lexmihaylov/cachee)
 [![Issue Count](https://codeclimate.com/github/lexmihaylov/cachee/badges/issue_count.svg)](https://codeclimate.com/github/lexmihaylov/cachee)
+[![HitCount](https://hitt.herokuapp.com/lexmihaylov/cachee.svg)](https://github.com/lexmihaylov/cachee)
 
 Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems
 # Install
