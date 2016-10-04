@@ -1,0 +1,26 @@
+{
+  "name": "cachee",
+  "description": "Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems",
+  "main": "cachee.js",
+  "authors": [
+    "Alexander Mihaylov <lex.mihaylov@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "browser",
+    "cache",
+    "memory",
+    "cache",
+    "blob",
+    "static",
+    "resources"
+  ],
+  "homepage": "https://github.com/lexmihaylov/cachee",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
