@@ -32,18 +32,21 @@ var cachee = {
      * <img cachee="src:/my-resource1" />
      * <img cachee="src:/my-resource2" />
      * <img cachee="src:/my-resource3" />
+     * <img cachee="src:custom-resource" />
      * 
      * <script>
      *  cachee.cache([
      *      cachee.resource('/my-resource1'),
      *      cachee.resource('/my-resource2'),
-     *      cachee.resource('/my-resource3')
+     *      cachee.resource('/my-resource3'),
+     *      cachee.writeResource('custom-resource', 'Custom Content', 'image/png')
      *  ]).then(function() {
      *      //resources loaded
      *      cachee.load(); or cache.load(myElem);
      *      // => <img src="blob:http://...1" />
      *      // => <img src="blob:http://...2" />
      *      // => <img src="blob:http://...3" />
+     *      // => <img src="blob:http://...4" />
      *  });
      * </script>
      * 
@@ -67,7 +70,7 @@ var cachee = {
     /**
      * load specfic resources
      * @memberof cachee
-     * @param {Element} elem (Optional) root element or document
+     * @param {Element} [elem=document] root element or document
      */
     load: function(elem) {
         elem = elem || document;
@@ -199,7 +202,7 @@ cachee.resource = function(url, opt) {
  * @memberof cachee
  * 
  * @param {String} url the resource url
- * @param {String} type (optional) http compliant responseType string (default is 'text')
+ * @param {String} [type="text"] http compliant responseType string
  * 
  * @returns {Promise}
  * 
@@ -220,7 +223,7 @@ cachee.readResource = function(url, type) {
     this.resource(url).then(function(blobUrl) {
         if(blobUrl) {
             return this.request({
-                url: url,
+                url: blobUrl,
                 responseType: type
             });    
         }
@@ -228,9 +231,36 @@ cachee.readResource = function(url, type) {
         deferred.reject(new Error('cant load resource `'+url+'`'));
     }.bind(this)).then(function(xhr) {
         deferred.resolve(xhr.response);
-    });
+    }).catch(deferred.reject);
     
     return promise;
+};
+
+/**
+ * Write a resource to the cache table
+ * @memberof cachee
+ * 
+ * @param {String} id unique identifyer 
+ * @param {Mixed} content the resource content
+ * @param {String} [mimeType="text/plain"] the resource's mime type
+ * @returns {Promise} the blob url in a promise
+ * 
+ * @example
+ * cachee.writeResource('hello-world', 'Hello, World', 'text/plain');
+ * 
+ * // reading the resource
+ * 
+ * cachee.readResource('hello-world', 'text').then(function(data) { 
+ *  console.log(data); // => "Hello, World"
+ * });
+ */
+cachee.writeResource = function(id, content, mimeType) {
+    mimeType = mimeType || 'text/plain';
+    
+    return new Promise(function(resolve) {
+        cacheTable[id] = window.URL.createObjectURL(new Blob([content], {type: mimeType}));
+        resolve(cacheTable[id]);
+    });
 };
 var RegExpEscape = function(str) {
     return (str+'').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");

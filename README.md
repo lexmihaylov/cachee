@@ -41,10 +41,11 @@ A namespace that holds methods to help cache data inside blob urls
 
 * [cachee](#cachee) : <code>object</code>
     * [.cache(cacheRequests)](#cachee.cache) ⇒ <code>Promise</code>
-    * [.load(elem)](#cachee.load)
+    * [.load([elem])](#cachee.load)
     * [.request(opt)](#cachee.request) ⇒ <code>Promise</code>
     * [.resource(url, opt)](#cachee.resource) ⇒ <code>Promise</code>
-    * [.readResource(url, type)](#cachee.readResource) ⇒ <code>Promise</code>
+    * [.readResource(url, [type])](#cachee.readResource) ⇒ <code>Promise</code>
+    * [.writeResource(id, content, [mimeType])](#cachee.writeResource) ⇒ <code>Promise</code>
     * [.$$(context, selector)](#cachee.$$) ⇒ <code>Array</code>
 
 <a name="cachee.cache"></a>
@@ -65,18 +66,21 @@ cache resource requests
 <img cachee="src:/my-resource1" />
 <img cachee="src:/my-resource2" />
 <img cachee="src:/my-resource3" />
+<img cachee="src:custom-resource" />
 
 <script>
  cachee.cache([
      cachee.resource('/my-resource1'),
      cachee.resource('/my-resource2'),
-     cachee.resource('/my-resource3')
+     cachee.resource('/my-resource3'),
+     cachee.writeResource('custom-resource', 'Custom Content', 'image/png')
  ]).then(function() {
      //resources loaded
      cachee.load(); or cache.load(myElem);
      // => <img src="blob:http://...1" />
      // => <img src="blob:http://...2" />
      // => <img src="blob:http://...3" />
+     // => <img src="blob:http://...4" />
  });
 </script>
 
@@ -95,14 +99,14 @@ cache resource requests
 ```
 <a name="cachee.load"></a>
 
-### cachee.load(elem)
+### cachee.load([elem])
 load specfic resources
 
 **Kind**: static method of <code>[cachee](#cachee)</code>  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| elem | <code>Element</code> | (Optional) root element or document |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [elem] | <code>Element</code> | <code>document</code> | root element or document |
 
 <a name="cachee.request"></a>
 
@@ -151,20 +155,44 @@ and retun it's blob url
 
 <a name="cachee.readResource"></a>
 
-### cachee.readResource(url, type) ⇒ <code>Promise</code>
+### cachee.readResource(url, [type]) ⇒ <code>Promise</code>
 Reads a resource and returns a specific type
 
 **Kind**: static method of <code>[cachee](#cachee)</code>  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| url | <code>String</code> | the resource url |
-| type | <code>String</code> | (optional) http compliant responseType string (default is 'text') |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>String</code> |  | the resource url |
+| [type] | <code>String</code> | <code>&quot;text&quot;</code> | http compliant responseType string |
 
 **Example**  
 ```js
 cachee.readResource('/my-resource', 'arraybuffer').then(function(data) {
  console.log(data);
+});
+```
+<a name="cachee.writeResource"></a>
+
+### cachee.writeResource(id, content, [mimeType]) ⇒ <code>Promise</code>
+Write a resource to the cache table
+
+**Kind**: static method of <code>[cachee](#cachee)</code>  
+**Returns**: <code>Promise</code> - the blob url in a promise  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| id | <code>String</code> |  | unique identifyer |
+| content | <code>Mixed</code> |  | the resource content |
+| [mimeType] | <code>String</code> | <code>&quot;text/plain&quot;</code> | the resource's mime type |
+
+**Example**  
+```js
+cachee.writeResource('hello-world', 'Hello, World', 'text/plain');
+
+// reading the resource
+
+cachee.readResource('hello-world', 'text').then(function(data) { 
+ console.log(data); // => "Hello, World"
 });
 ```
 <a name="cachee.$$"></a>

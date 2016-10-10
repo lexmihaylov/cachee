@@ -1,4 +1,4 @@
-QUnit.test('Updating the dome with cached resources', function(assert) {
+QUnit.test('Updating the dom with cached resources', function(assert) {
     (function() {
         var div = document.createElement('div');
         var img = new Image();

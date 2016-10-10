@@ -23,18 +23,21 @@ var cachee = {
      * <img cachee="src:/my-resource1" />
      * <img cachee="src:/my-resource2" />
      * <img cachee="src:/my-resource3" />
+     * <img cachee="src:custom-resource" />
      * 
      * <script>
      *  cachee.cache([
      *      cachee.resource('/my-resource1'),
      *      cachee.resource('/my-resource2'),
-     *      cachee.resource('/my-resource3')
+     *      cachee.resource('/my-resource3'),
+     *      cachee.writeResource('custom-resource', 'Custom Content', 'image/png')
      *  ]).then(function() {
      *      //resources loaded
      *      cachee.load(); or cache.load(myElem);
      *      // => <img src="blob:http://...1" />
      *      // => <img src="blob:http://...2" />
      *      // => <img src="blob:http://...3" />
+     *      // => <img src="blob:http://...4" />
      *  });
      * </script>
      * 
@@ -58,7 +61,7 @@ var cachee = {
     /**
      * load specfic resources
      * @memberof cachee
-     * @param {Element} elem (Optional) root element or document
+     * @param {Element} [elem=document] root element or document
      */
     load: function(elem) {
         elem = elem || document;
