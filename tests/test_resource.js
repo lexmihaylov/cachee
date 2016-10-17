@@ -39,6 +39,8 @@ QUnit.test('Resource caching and reading', function(assert) {
         var done2 = assert.async();
         cachee.readResource(id, 'text').then(function(data) {
             assert.ok(data === content, 'writeResource should be readable multiple times');
+            cachee.deleteResource(id);
+            assert.ok(!(id in cachee._cacheTable()), 'deleteResource should unset the resource and free memory.');
             done2();
         }).catch(function(err) {
             assert.ok(false, err.message);

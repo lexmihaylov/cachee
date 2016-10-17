@@ -101,3 +101,23 @@ cachee.writeResource = function(id, content, mimeType) {
         resolve(cacheTable[id]);
     });
 };
+
+/**
+ * removes a resource form cache
+ * @memberof cachee
+ * 
+ * @param {String} id
+ * 
+ * @example
+ * cachee.writeResource('hello-world', 'Hello, World', 'text/plain');
+ * ...
+ * // delete the resource after we are done with it
+ * cachee.deleteResource('hello-world');
+ */
+cachee.deleteResource = function(id) {
+    if(id in cacheTable) {
+        var blobUrl = cacheTable[id];
+        delete cacheTable[id];
+        window.URL.revokeObjectURL(blobUrl);
+    }
+};

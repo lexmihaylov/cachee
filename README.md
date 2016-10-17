@@ -46,6 +46,7 @@ A namespace that holds methods to help cache data inside blob urls
     * [.resource(url, opt)](#cachee.resource) ⇒ <code>Promise</code>
     * [.readResource(url, [type])](#cachee.readResource) ⇒ <code>Promise</code>
     * [.writeResource(id, content, [mimeType])](#cachee.writeResource) ⇒ <code>Promise</code>
+    * [.deleteResource(id)](#cachee.deleteResource)
     * [.$$(context, selector)](#cachee.$$) ⇒ <code>Array</code>
 
 <a name="cachee.cache"></a>
@@ -194,6 +195,24 @@ cachee.writeResource('hello-world', 'Hello, World', 'text/plain');
 cachee.readResource('hello-world', 'text').then(function(data) { 
  console.log(data); // => "Hello, World"
 });
+```
+<a name="cachee.deleteResource"></a>
+
+### cachee.deleteResource(id)
+removes a resource form cache
+
+**Kind**: static method of <code>[cachee](#cachee)</code>  
+
+| Param | Type |
+| --- | --- |
+| id | <code>String</code> | 
+
+**Example**  
+```js
+cachee.writeResource('hello-world', 'Hello, World', 'text/plain');
+...
+// delete the resource after we are done with it
+cachee.deleteResource('hello-world');
 ```
 <a name="cachee.$$"></a>
 
