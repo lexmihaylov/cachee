@@ -1,6 +1,16 @@
 {
-  "name": "cachee",
+  "name": "cacheejs",
+  "version": "1.0.2",
   "description": "Cachee is a simple library that helps developer cache resources and requests and reuse them during a long lived application. That way if the app looses connectivity during usage the user will not experience any problems",
+  "keywords": [
+    "browser",
+    "cache",
+    "memory",
+    "cache",
+    "blob",
+    "static",
+    "resources"
+  ],
   "main": "cachee.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +24,7 @@
     "url": "https://github.com/lexmihaylov/cachee/issues"
   },
   "homepage": "https://github.com/lexmihaylov/cachee#readme",
-  "dependencies": {
+  "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-rename": "^1.2.2",
@@ -22,7 +32,7 @@
     "gulp-shell": "^0.5.2",
     "gulp-uglifyjs": "^0.6.2",
     "gulp-umd": "^0.2.0",
-    "jsdoc-to-markdown": "^1.3.7",
+    "jsdoc-to-markdown": "^2.0.1",
     "node-qunit-phantomjs": "^1.4.0",
     "promise-polyfill": "^6.0.2"
   }
