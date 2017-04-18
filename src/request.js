@@ -28,6 +28,11 @@
  */
 cachee.request = function(opt) {
     var xhr = new XMLHttpRequest();
+    
+    opt.method = opt.method || 'GET';
+    
+    xhr.open(opt.method.toUpperCase(), opt.url, 'async' in opt? opt.async: true);
+    
     var promise = new Promise(function(resolve, reject) {
         xhr.addEventListener("load", function onLoad() {
             if (xhr.status === 200) {  
@@ -40,7 +45,7 @@ cachee.request = function(opt) {
         });
     });
     
-    opt.method = opt.method || 'GET';
+    
     
     if(opt.method.toUpperCase() === 'POST') xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.responseType = opt.responseType || 'blob';
@@ -65,8 +70,6 @@ cachee.request = function(opt) {
         }
     }
     
-    
-    xhr.open(opt.method.toUpperCase(), opt.url, 'async' in opt? opt.async: true);
     xhr.send(opt.data || null);
     
     return promise;
